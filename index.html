@@ -42,37 +42,53 @@
             min-width: 100%;
         }
 
-        #result {
-            position: absolute;
-            z-index: 999;
-            width: 50%;
-            left: 50%;
-            margin-left: -25%;
-            top: 40px;
-        }
-
         #info-box {
             position: absolute;
             z-index: 999;
-            width: 100px;
-            height: 80px;
+            width: 250px;
+            height: 150px;
             left: 20px;
             top: 30px;
-            border-style: solid;
-            border-color: black;
+            border: solid black 2px;
         }
+
+        .info {
+            font-family: sans-serif;
+            color: black;
+        }
+
+        #clear-ui {
+            position: relative;
+            margin: 0px auto;
+            width: 50%;
+            height: 40px;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            font-size: 12px;
+            text-align: center;
+            color: #fff;
+            background: #ee8a65;
+            }
+
     </style>
 </head>
 
 <body>
     <div id="map"></div>
     <div id="geocoder" class="geocoder"></div>
-    <pre id="result"></pre>
-    <div id="info-box"></div>
+    <div id="info-box">
+        <div id="precinct-text" class="info">Precinct: </div>
+        <div id="winning-candidate" class="info">Winning candidate: </div>
+        <div id="winning-party" class="info">Party: </div>
+        <button id="clear-ui">Reset map</button>
+
+    </div>
 
 
     <script src='https://unpkg.com/@turf/turf@6/turf.min.js'></script>
     <script src="https://d3js.org/d3-fetch.v1.min.js"></script>
+    <!-- <script src="app.js"></script> -->
     <script src="app.js"></script>
 
 </body>
