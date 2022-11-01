@@ -6,14 +6,17 @@ const map = new mapboxgl.Map({
     container: 'map', // add map to map div container
     style: 'mapbox://styles/mcclatchy/cl9rkqwal000n14middztqid0', // miami-gray-outline style
     center: [-80.427, 25.563], // miami-dade county view
-    zoom: 8.75,
-    maxBounds: [
-        [-81.5, 25], // southwest
-        [-79.5, 26] // northeast
+    // zoom: 8.2,
+    bounds: [
+        [-81.4, 25.0], // southwest
+        [-79.4, 26.0] // northeast
     ],
-    minZoom: 8.75,
-    maxZoom: 12
+    minZoom: 7,
+    maxZoom: 12,
+    trackResize: true
 });
+
+
 
 /* DEFINE FILL COLOR VARIABLE */
 const fillColor = [
@@ -111,8 +114,50 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
         })
 
 
+
+        // /* UPDATE INFO BOX ON HOVER */
+        // const popup = new mapboxgl.Popup({
+        //     closeButton: false,
+        //     closeOnClick: false
+        // })
+
+        /* GET CONTAINERS FOR RESULTS */
+        const precinctText = document.getElementById('precinct-text');
+        const partyText = document.getElementById('winning-party');
+
         /* UPDATE FEATURE STATE WHEN MOUSE MOVES OVER FEATURE */
         map.on('mousemove', 'precinct-fills', (e) => {
+            // change cursor for UI indicator
+            map.getCanvas().style.cursor = 'pointer';
+
+            const hoverCoords = e.lngLat.toArray();
+            // popup.setLngLat(hoverCoords).setHTML(description).addTo(map);
+
+            /* LOOP THORUGH EACH PRECINCT */
+            data.features.forEach(element => {
+                if (element.geometry != null) {
+
+                    /* GET POLYGON GEODATA */
+                    let precinctPoly = turf.polygon(element.geometry.coordinates);
+
+                    /* IF SEARCH POINT FALLS WITHIN THIS LOOP'S PRECINCT... */
+                    if (turf.booleanPointInPolygon(hoverCoords, precinctPoly)) {
+
+                        /* ASSIGN RESULTS TO VARIABLES */
+                        let precinctNum = element.properties['PRECINCT'];
+                        let winningParty = element.properties['precinct-winner_leading-party'];
+
+                        /* PRINT RESULTS TO INFO BOX */
+                        precinctText.innerText = `Precinct ${precinctNum}`;
+                        partyText.innerText = `Winning party: ${winningParty}`;
+
+                    } // end turf match
+
+                }
+            }) // end feature loop
+
+
+
 
             if (e.features.length > 0) {
                 // reset all features to no hover effect
@@ -138,8 +183,15 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
             }
         });
 
-        /* REVERT HOVER STATE TO FALSE WHEN MOUSE LEAVES */
+        /* REVERT HOVER STATE TO FALSE WHEN MOUSE LEAVES AND REMOVE POPUP */
         map.on('mouseleave', 'precinct-fills', () => {
+            // remove info
+            map.getCanvas().style.cursor = '';
+            /* PRINT RESULTS TO INFO BOX */
+            precinctText.innerText = `Precinct: `;
+            partyText.innerText = `Winning party: `;
+
+
             if (hoverStateId !== null) {
                 map.setFeatureState({
                     source: 'precincts',
@@ -165,9 +217,6 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
         /* ADD GEOCODER TO DOM ELEMENT FOR UI SEARCH CAPABILITY */
         geocoder.addTo('#geocoder');
 
-        /* GET CONTAINERS FOR RESULTS */
-        const precinctText = document.getElementById('precinct-text');
-        const partyText = document.getElementById('winning-party');
 
         /* WHEN GEOCODER RETURNS RESULT, FIND CORRESPONDING PRECINCT */
         geocoder.on('result', function (e) {
@@ -229,6 +278,7 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
                 }
             }) // end feature loop
 
+
             /* IF USER HITS RESET MAP BUTTON, FLY TO ORIG POSITION AND CLEAR GEOCODER */
             document.getElementById('clear-ui').addEventListener('click', () => {
                 geocoderId = null;
@@ -242,18 +292,27 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
             /* REVERT UI SEARCH HIGHLIGHT TO FALSE WHEN GEOCODER IS CLEARED */
             geocoder.on('clear', () => {
                 geocoderId = null;
-                    map.setFeatureState({
-                        source: 'precincts',
-                        id: geocoderId
-                    }, {
-                        'ui-search': false
-                    });
-                
+                map.setFeatureState({
+                    source: 'precincts',
+                    id: geocoderId
+                }, {
+                    'ui-search': false
+                });
+
                 partyText.innerText = `Party: `;
                 precinctText.innerText = `Precinct: `
 
             });
         }) // end geocoder.on('result')
 
+        map.on('resize', () => {
+            map.fitBounds([
+                [-81.4, 25.0], // southwest
+                [-79.4, 26.0] // northeast
+            ])
+        })
+
     }) // end map.on('load')
+
+
 })

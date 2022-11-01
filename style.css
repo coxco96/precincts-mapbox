@@ -1,0 +1,16 @@
+body {
+    font-family: 'Noto Sans', sans-serif;
+}
+
+#map {
+    height: 60vh;
+}
+
+.mapboxgl-ctrl-geocoder {
+    min-width: 100%;
+}
+
+.mapboxgl-popup {
+    max-width: 400px;
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
