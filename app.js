@@ -6,15 +6,17 @@ const map = new mapboxgl.Map({
     container: 'map', // add map to map div container
     style: 'mapbox://styles/mcclatchy/cl9rkqwal000n14middztqid0', // miami-gray-outline style
     center: [-80.427, 25.563], // miami-dade county view
-    // zoom: 8.2,
-    bounds: [
-        [-81.4, 25.0], // southwest
-        [-79.4, 26.0] // northeast
-    ],
+    zoom: 8.2,
+    // bounds: [
+    //     [-81.4, 25.0], // southwest
+    //     [-79.4, 26.0] // northeast
+    // ],
     minZoom: 7,
-    maxZoom: 12,
+    maxZoom: 14,
     trackResize: true
 });
+
+map.getCanvas().style.cursor = 'default';
 
 
 
@@ -48,12 +50,13 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
         map.addSource('precincts', {
             type: 'geojson',
             data: data,
-            generateId: true // id attribute is necessary for feature-state to work
+            generateId: true 
         })
 
-        /* USE THE GEOJSON DATA AS MAP LAYERS */
 
-        // fill. this layer is used to display the data and for hover effect.
+       /////* USE THE GEOJSON DATA AS MAP LAYERS */////
+
+        /* HOVER EFFECT LAYER */
         map.addLayer({
             id: 'precinct-fills',
             type: 'fill',
@@ -76,8 +79,8 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
             source: 'precincts',
             paint: {
                 'line-color': 'white',
-                'line-width': .7,
-                'line-opacity': .5
+                'line-width': .2,
+                'line-opacity': .8
             }
         })
 
@@ -151,12 +154,8 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
 
         /* REVERT HOVER STATE TO FALSE WHEN MOUSE LEAVES AND REMOVE POPUP */
         map.on('mouseleave', 'precinct-fills', () => {
-            // remove info
-            map.getCanvas().style.cursor = '';
-            /* PRINT RESULTS TO INFO BOX */
-            // precinctText.innerText = `Precinct: `;
-            // partyText.innerText = `Winning party: `;
-
+            // change cursor style and remove hover effect
+            map.getCanvas().style.cursor = 'default';
 
             if (hoverStateId !== null) {
                 map.setFeatureState({

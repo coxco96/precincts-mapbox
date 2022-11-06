@@ -1,9 +1,14 @@
 body {
     font-family: 'Noto Sans', sans-serif;
+    max-width: 700px;
+    padding: 30px;
+    width: 100%;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    margin: auto;
 }
 
 #map {
-    height: 60vh;
+    height: 50vh;
 }
 
 .mapboxgl-ctrl-geocoder {
@@ -15,11 +20,20 @@ body {
     font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
+#title-info {
+    padding-top: 20px;
+    /* border-bottom: solid rgba(128, 128, 128, 0.473) .5px; */
+    text-transform: uppercase;
+    padding-right: 20%;
+}
+
 h1 {
-    font-size: 20px;
-    padding: 15px;
-    margin-bottom: 10px;
-    font-family: 'Noto Sans', sans-serif;
-    border-bottom: solid rgba(128, 128, 128, 0.473) .5px;
-    
+    font-size: calc(.7rem + .7vw);
+    font-weight: 800;
+    letter-spacing: .02rem;
+}
+
+h2 {
+    font-size: calc(.6rem + .5vw);
+    font-weight: 750;
 }
