@@ -14,7 +14,7 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <!-- font-family: 'Noto Sans', sans-serif; -->
     <!-- font-family: 'Noto Serif', serif; -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Serif&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Serif&display=swap" rel="stylesheet">
     <!-- repo stylesheet -->
     <link rel="stylesheet" href="style.css" type="text/css">
 </head>
@@ -28,7 +28,8 @@
                 <h1 class="col">How did your neighbor vote in the gubernatorial election?</h1>
             </div>
             <div class="row">
-                <h2 class="col">Search an address or click an area to see election results and how they compare to 2018.</h2>
+                <h2 class="col">Search an address or click an area to see election results and how they compare to 2018.
+                </h2>
             </div>
 
         </div>
@@ -37,7 +38,7 @@
 
         <div class="row">
             <div id="map" class="col"><span class="visually-hidden-focusable">alt text for map will go here</span></div>
-            </div>
+        </div>
 
 
         <div class="row">
@@ -47,15 +48,24 @@
         <div class="row">
 
             <div id="info-box">
-            <div id="precinct-text" class="info">Precinct: </div>
-            <div id="winning-candidate" class="info">Winning candidate: </div>
-            <div id="winning-party" class="info">Party: </div>
-            <button id="clear-ui">Reset map</button>
-    
-        </div>
+                <div id="precinct-text" style="padding-bottom: 3px;" class="info"><strong>Precinct: </strong></div>
+                <div id="winning-candidate" class="info"><strong>Winning candidate: </strong></div>
+                <div id="winning-party" class="info"><strong>2018 winner in this precinct: </strong></div>
+
+                <button id="clear-ui" style="margin-top: 5px;">Reset map</button>
+
+            </div>
+
+            <div class="row">
+                <footer>
+                    <div class="attribution">
+                       Sources: Sources here | <em>Map by: Court Cox</em>
+                    </div>
+                </footer>
+            </div>
 
 
-        </div>
+        
     </div>
 
 
