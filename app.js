@@ -7,10 +7,6 @@ const map = new mapboxgl.Map({
     style: 'mapbox://styles/mcclatchy/cla76pdyc003p15rtjy7ek1z4', // darker
     center: [-80.427, 25.563], // miami-dade county view
     zoom: 8.0,
-    // bounds: [
-    //     [-81.4, 25.0], // southwest
-    //     [-79.4, 26.0] // northeast
-    // ],
     minZoom: 8.0,
     maxZoom: 14,
     trackResize: true
@@ -68,7 +64,7 @@ d3.json("data/final-gov.json").then(function (data) { // REPLACE WITH REAL ELECT
             generateId: true
         })
 
-
+ 
         /////* USE THE GEOJSON DATA AS MAP LAYERS */////
 
         /* HOVER EFFECT LAYER */
@@ -280,12 +276,12 @@ d3.json("data/final-gov.json").then(function (data) { // REPLACE WITH REAL ELECT
                         cristPercentDiv.innerText = cristPercent + "%";
                         winner2018Div.innerText = winner2018 + " by a margin of ";
                         margin2018Div.innerText = margin2018 + "%.";
-                        republicanDemographicDiv.innerText = republicanDemographic;
-                        democratDemographicDiv.innerText = democratDemographic;
+                        republicanDemographicDiv.innerText = republicanDemographic+"%";
+                        democratDemographicDiv.innerText = democratDemographic+"%";
                         racialDemographicDiv.innerText = racialDemographic;
 
                         /* ASSIGN GEOCODERID THE OBJECTID OF CORRESPONDING PRECICT */
-                        geocoderId = element.properties['OBJECTID'];
+                        geocoderId = element.properties['PRECINCT'];
 
                         /* SET UI-SEARCH TO TRUE FOR THIS ELEMENT */
 
@@ -316,9 +312,9 @@ d3.json("data/final-gov.json").then(function (data) { // REPLACE WITH REAL ELECT
                 cristPercentDiv.innerText = "";
                 winner2018Div.innerText = "";
                 margin2018Div.innerText = "";
-                republicanDemographicDiv = "";
-                democratDemographicDiv = "";
-                racialDemographicDiv = "";
+                republicanDemographicDiv.innerText = "";
+                democratDemographicDiv.innerText = "";
+                racialDemographicDiv.innerText = "";
 
                 map.setFeatureState({
                     source: 'precincts',
