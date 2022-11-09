@@ -5,7 +5,8 @@ body {
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
     margin: 15px auto;
     padding: 15px auto 15px auto;
-    height: 95vh;
+    /* min-height: 750px; */
+    /* height: 95vh; */
 }
 
 #map {

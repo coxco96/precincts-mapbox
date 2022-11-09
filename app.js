@@ -5,9 +5,10 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibWNjbGF0Y2h5IiwiYSI6ImNsOWl4MGQ1ZTRqMTczbnFtZ
 const map = new mapboxgl.Map({
     container: 'map', // add map to map div container
     // style: 'mapbox://styles/mcclatchy/cla5w0jdv000114l328igfw51', // miami-outline-with-places
-    style: 'mapbox://styles/mcclatchy/cl9rkqwal000n14middztqid0', // miami-gray-outline style
+    // style: 'mapbox://styles/mcclatchy/cl9rkqwal000n14middztqid0', // miami-gray-outline style
+    style: 'mapbox://styles/mcclatchy/cla76pdyc003p15rtjy7ek1z4', // darker
     center: [-80.427, 25.563], // miami-dade county view
-    zoom: 8.2,
+    zoom: 8.4,
     // bounds: [
     //     [-81.4, 25.0], // southwest
     //     [-79.4, 26.0] // northeast
@@ -31,14 +32,14 @@ const fillColor = [
     'match',
     ['get', 'precinct-winner_leading-party'],
     'DEM',
-    '#15607A', // blue
+    '#04639f', // blue
     'REP',
-    '#C71E1D', // red
+    '#b82114', // red
     'TIED',
-    '#9E6195', // purple
+    '#222732', // gray
     'N/A',
-    '#CFCFCF', // gray
-    'black' // other
+    '#222732', // gray
+    '#222732' // gray
 ]
 
 /* SET HOVER STATE ID AND GEOCODERSTATUS FOR FEATURE-STATE USE */
@@ -54,7 +55,7 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
 
                     /* FIND PLACE LABELS LAYER IN ORDER TO GET IT ON TOP */
                     const layers = map.getStyle().layers;
-                    // Find the index of the first symbol layer in the map style.
+                    // find the index of the first symbol layer in the map style.
                     let firstSymbolId;
                     for (const layer of layers) {
                         if (layer.type === 'symbol') {
@@ -62,7 +63,6 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
                             break;
                         }
                     }
-
 
                         /* ADD THE GEOJSON AS DATA SOURCE FOR THE MAP */
                         map.addSource('precincts', {
@@ -144,8 +144,10 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
 
 
                         /* GET CONTAINERS FOR RESULTS */
-                        const precinctText = document.getElementById('precinct-text');
-                        const partyText = document.getElementById('winning-party');
+                        const precinctText = document.getElementById('precinct-num');
+                        const candidateText = document.getElementById('candidate-name');
+                        const winner2018 = document.getElementById('winner-2018');
+                        
 
                         /* UPDATE FEATURE STATE WHEN MOUSE MOVES OVER FEATURE */
                         map.on('mousemove', 'precinct-fills', (e) => {
@@ -243,7 +245,8 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
                                         /* ASSIGN RESULTS TO VARIABLES */
                                         let precinctNum = element.properties['PRECINCT'];
                                         let winningParty = element.properties['precinct-winner_leading-party'];
-                                        let winningCandidate = "winning candidate here"
+                                        let winningCandidate = "winning candidate here";
+                                        let pastWinnerName = "past winner here";
 
                                         const partyColor = (winningParty) => {
                                             if (winningParty == 'DEM') {
@@ -257,7 +260,8 @@ d3.json("data/TEST-precincts-with-party-winner.geojson").then(function (data) { 
 
                                         /* PRINT RESULTS TO INFO BOX */
                                         precinctText.innerText = `Precinct: ${precinctNum}`;
-                                        partyText.innerText = `<span style='color:'${partyColor(winningParty)}'>Winning candidate: ${winningCandidate}</span>`;
+                                        candidateText.innerText = `<span style='color:${partyColor(winningParty)}'>Winning candidate: ${winningCandidate}</span>`;
+                                        winner2018.innerText = pastWinnerName;
 
                                         /* ASSIGN GEOCODERID THE OBJECTID OF CORRESPONDING PRECICT */
                                         geocoderId = element.properties['OBJECTID'];

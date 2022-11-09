@@ -25,10 +25,10 @@
         <div id="title-info">
 
             <div class="row">
-                <h1 class="col">How did your neighbor vote in the gubernatorial election?</h1>
+                <h1 class="col">How did your neighbohood vote in the gubernatorial election?</h1>
             </div>
             <div class="row">
-                <h2 class="col">Search an address or click an area to see election results and how they compare to 2018.
+                <h2 class="col">Search an address to see election results and how they compare to 2018.
                 </h2>
             </div>
 
@@ -48,9 +48,17 @@
         <div class="row">
 
             <div id="info-box">
-                <div id="precinct-text" style="padding-bottom: 3px;" class="info"><strong>Precinct: </strong></div>
-                <div id="winning-candidate" class="info"><strong>Winning candidate: </strong></div>
-                <div id="winning-party" class="info"><strong>2018 winner in this precinct: </strong></div>
+                <div id="precinct-line" style="padding-bottom: 3px;" class="info">
+                    <strong>Precinct:</strong><div id="precinct-num"></div>
+                </div>
+
+                <div id="candidate-line" class="info">
+                    <strong>Winning candidate:</strong> <div id="candidate-name"></div>
+                </div>
+
+                <div id="past-result" class="info">
+                    <strong>2018 winner in this precinct:</strong><div id="winner-2018"></div>
+                </div>
 
                 <button id="clear-ui" style="margin-top: 5px;">Reset map</button>
 
@@ -59,7 +67,7 @@
             <div class="row">
                 <footer>
                     <div class="attribution">
-                       Sources: Sources here | <em>Map by: Court Cox</em>
+                       Source: <a href="https://enr.electionsfl.org/DAD/3267/Summary/">Florida Elections</a><br><em>Map by: Court Cox; Shirsho Dasgupta</em>
                     </div>
                 </footer>
             </div>
