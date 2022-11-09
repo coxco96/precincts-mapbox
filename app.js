@@ -45,7 +45,7 @@ let geocoderId = null;
 
 
 /* REQUEST PRECINCTS GEOJSON WITH RESULTS FROM DATA FOLDER, THEN LOAD MAP */
-d3.json("data/demo-data-test.json").then(function (data) { // REPLACE WITH REAL ELECTION RESULTS FILE
+d3.json("data/final-gov.json").then(function (data) { // REPLACE WITH REAL ELECTION RESULTS FILE
 
     map.on('load', () => {
         console.log(data);
@@ -82,8 +82,10 @@ d3.json("data/demo-data-test.json").then(function (data) { // REPLACE WITH REAL 
                     'fill-opacity': [
                         'case',
                         ['boolean', ['feature-state', 'hover'], false],
-                        1, // full opacity with no hover; 0.8 with hover
-                        .5
+                        .8, // full opacity with no hover; 0.8 with hover
+                        ['boolean', ['feature-state', 'ui-search'], false],
+                        .8,
+                        1
                     ]
                 }
             },
@@ -114,7 +116,7 @@ d3.json("data/demo-data-test.json").then(function (data) { // REPLACE WITH REAL 
                     'fill-opacity': [
                         'case',
                         ['boolean', ['feature-state', 'ui-search'], false],
-                        1,
+                        .8,
                         0 // full opacity if geocoder has result; 0 opacity if not
                     ],
                     'fill-color': fillColor
@@ -129,7 +131,7 @@ d3.json("data/demo-data-test.json").then(function (data) { // REPLACE WITH REAL 
                 type: 'line',
                 source: 'precincts',
                 paint: {
-                    'line-color': 'yellow',
+                    'line-color': '#FAF991',
                     'line-width': 1.4,
                     'line-opacity': [
                         'case',
@@ -158,7 +160,7 @@ d3.json("data/demo-data-test.json").then(function (data) { // REPLACE WITH REAL 
         map.on('mousemove', 'precinct-fills', (e) => {
             // change cursor for UI indicator
             map.getCanvas().style.cursor = 'pointer';
-            console.log(map.getZoom());
+
 
             const hoverCoords = e.lngLat.toArray();
 
